@@ -447,8 +447,8 @@ export const awardWinners: Film[] = [
 export const curatedCollection: Film[] = [
   { ...newReleases[0], poster: poster4 },
   { ...newReleases[1], poster: poster8 },
-  { ...luzon[4], poster: poster6 },
-  { ...luzon[1], poster: poster3 },
-  { ...classics[1], poster: poster2 },
-  { ...shortsAndDocs[3], poster: poster7 },
+  { ...luzon[4] },
+  { ...luzon[1] },
+  { ...classics[1] },
+  { ...shortsAndDocs[3] },
 ];
