@@ -91,7 +91,8 @@
 }
 
 @utility snap-rail {
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
+  scroll-padding-left: 1rem;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   overscroll-behavior-x: contain;
