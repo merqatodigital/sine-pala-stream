@@ -77,19 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Sinelibre — Streaming Filipino Independent Cinema" },
+      { title: "Likha Flix — Filipino Independent Cinema, Streaming" },
       {
         name: "description",
         content:
-          "Sinelibre is a streaming home for Filipino independent film — festival winners, regional voices, documentaries, and shorts.",
+          "Likha Flix streams Filipino independent film — festival winners, regional voices, documentaries and shorts. Rent in HD from ₱49.",
       },
-      { name: "author", content: "Sinelibre" },
-      { property: "og:title", content: "Sinelibre — Streaming Filipino Independent Cinema" },
-      {
-        property: "og:description",
-        content:
-          "Festival winners, regional voices, documentaries, and shorts from across the Philippines.",
-      },
+      { name: "author", content: "Likha Flix" },
+      { property: "og:site_name", content: "Likha Flix" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -99,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
