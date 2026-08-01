@@ -37,7 +37,7 @@ export function Discover({ title, subtitle, films, onOpen }: DiscoverProps) {
       <div className="grid gap-4 lg:grid-cols-12">
         <SpotlightCard film={spotlight} onOpen={onOpen} />
         {supporting.length ? (
-          <div className="grid grid-cols-2 gap-4 lg:col-span-5 lg:grid-cols-2">
+          <div className="grid grid-cols-2 gap-4 lg:col-span-5">
             {supporting.map((film) => (
               <SupportingCard key={film.id} film={film} onOpen={onOpen} />
             ))}
@@ -64,7 +64,7 @@ function MyListToggle({ film, size = "size-9" }: { film: Film; size?: string }) 
       className={`grid ${size} place-items-center rounded-full border backdrop-blur-md transition-all duration-300 ${
         saved
           ? "border-gold bg-gold/20 text-gold opacity-100"
-          : "border-white/25 bg-black/40 text-foreground opacity-0 group-hover:opacity-100"
+          : "border-white/25 bg-black/40 text-foreground opacity-80 hover:opacity-100"
       }`}
     >
       {saved ? <Check className="size-4" /> : <Plus className="size-4" />}
@@ -72,10 +72,16 @@ function MyListToggle({ film, size = "size-9" }: { film: Film; size?: string }) 
   );
 }
 
+/**
+ * Fixed aspect ratios at every breakpoint, not a height matched to its
+ * sibling grid column — that made the crop unpredictable depending on how
+ * many supporting cards happened to render, which is exactly what was
+ * looking inconsistent between sections on desktop.
+ */
 function SpotlightCard({ film, onOpen }: { film: Film; onOpen: (f: Film) => void }) {
   const { t } = useLanguage();
   return (
-    <div className="group relative col-span-1 aspect-[4/3] overflow-hidden rounded-xl bg-card ring-1 ring-white/5 transition-all duration-300 hover:ring-white/15 lg:col-span-7 lg:aspect-auto lg:h-full lg:min-h-[420px]">
+    <div className="group relative col-span-1 aspect-[4/3] overflow-hidden rounded-xl bg-card ring-1 ring-white/5 transition-all duration-300 hover:ring-white/15 sm:aspect-[16/10] lg:col-span-7 lg:aspect-[2/1]">
       <button onClick={() => onOpen(film)} className="absolute inset-0 text-left" aria-label={`Open ${film.title}`}>
         <img
           src={film.still}
@@ -100,7 +106,7 @@ function SpotlightCard({ film, onOpen }: { film: Film; onOpen: (f: Film) => void
           </p>
         </div>
 
-        <div className="pointer-events-none absolute right-5 top-5 grid size-11 place-items-center rounded-full border border-white/25 bg-black/40 text-foreground opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100">
+        <div className="pointer-events-none absolute right-5 top-5 grid size-11 place-items-center rounded-full border border-white/25 bg-black/40 text-foreground opacity-80 backdrop-blur-md transition-all duration-300 group-hover:opacity-100">
           <Play className="size-4 fill-current" />
         </div>
       </button>

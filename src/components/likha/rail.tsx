@@ -183,7 +183,7 @@ export function FilmCard({
         className={`absolute left-2 top-2 grid size-7 place-items-center rounded-full border backdrop-blur-sm transition-all duration-200 ${
           saved
             ? "border-gold bg-gold/20 text-gold opacity-100"
-            : "border-white/25 bg-black/50 text-foreground opacity-0 lg:group-hover:opacity-100"
+            : "border-white/25 bg-black/50 text-foreground opacity-80 hover:opacity-100"
         }`}
       >
         {saved ? <Check className="size-3.5" /> : <Plus className="size-3.5" />}
