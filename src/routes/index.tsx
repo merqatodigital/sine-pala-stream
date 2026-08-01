@@ -45,13 +45,21 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const [selected, setSelected] = useState<Film | null>(null);
-  const open = (film: Film) => setSelected(film);
+  const [autoplayTrailer, setAutoplayTrailer] = useState(false);
+  const open = (film: Film) => {
+    setSelected(film);
+    setAutoplayTrailer(false);
+  };
+  const openWithTrailer = (film: Film) => {
+    setSelected(film);
+    setAutoplayTrailer(true);
+  };
 
   return (
     <div className="min-h-screen bg-background pb-20 lg:pb-0">
       <TopNav />
       <main>
-        <Hero onOpen={open} />
+        <Hero onOpen={open} onWatchTrailer={openWithTrailer} />
 
         <Rail
           title="Cinemalaya 2026 Official Selection"
@@ -106,7 +114,11 @@ function Home() {
 
       <Footer />
       <MobileTabBar />
-      <FilmDetail film={selected} onClose={() => setSelected(null)} />
+      <FilmDetail
+        film={selected}
+        autoplayTrailer={autoplayTrailer}
+        onClose={() => setSelected(null)}
+      />
     </div>
   );
 }

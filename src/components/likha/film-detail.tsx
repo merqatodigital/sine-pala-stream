@@ -3,7 +3,15 @@ import { ChevronLeft, Play, Plus, Share2, X } from "lucide-react";
 import { priceLabel, tierLabel } from "@/data/films";
 import type { Film } from "@/data/films";
 
-export function FilmDetail({ film, onClose }: { film: Film | null; onClose: () => void }) {
+export function FilmDetail({
+  film,
+  autoplayTrailer = false,
+  onClose,
+}: {
+  film: Film | null;
+  autoplayTrailer?: boolean;
+  onClose: () => void;
+}) {
   const [isPreviewing, setIsPreviewing] = useState(false);
 
   useEffect(() => {
@@ -17,10 +25,11 @@ export function FilmDetail({ film, onClose }: { film: Film | null; onClose: () =
     };
   }, [film, onClose]);
 
-  // Always reopen on the poster, never mid-preview from a previous film.
+  // Reopen on the poster by default; a "Watch Trailer" CTA (e.g. from the
+  // Hero) can request the trailer start playing immediately instead.
   useEffect(() => {
-    setIsPreviewing(false);
-  }, [film?.id]);
+    setIsPreviewing(Boolean(autoplayTrailer && film?.trailerYoutubeId));
+  }, [film?.id, autoplayTrailer]);
 
   if (!film) return null;
 
