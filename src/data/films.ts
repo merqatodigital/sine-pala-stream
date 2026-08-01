@@ -51,6 +51,7 @@ export type Film = {
   synopsis: string;
   award?: string;
   progress?: number;
+  trailerYoutubeId?: string;
 };
 
 export const tierLabel: Record<Tier, string> = {
