@@ -36,8 +36,9 @@ export function TopNav() {
         scrolled ? "border-b border-border bg-background/90 backdrop-blur-xl" : "bg-gradient-to-b from-background to-transparent"
       }`}
     >
-      <nav className="mx-auto grid h-14 max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 sm:px-6 lg:h-16 lg:flex lg:justify-between">
+      <nav className="mx-auto grid h-14 max-w-[1440px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 sm:px-6 lg:flex lg:h-16 lg:justify-between lg:px-8">
         <div className="flex min-w-0 items-center gap-8">
+
           <Link to="/" className="shrink-0 text-lg lg:text-xl">
             <Wordmark />
           </Link>
