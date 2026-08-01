@@ -45,10 +45,13 @@ export function FilmDetail({ film, onClose }: { film: Film | null; onClose: () =
         </div>
 
         <div className="p-5 sm:p-7">
-          <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{film.title}</h2>
-          <p className="mt-1.5 text-[13px] text-muted-foreground">
+          <h2 className="font-display text-2xl font-semibold tracking-[-0.01em] sm:text-3xl">
+            {film.title}
+          </h2>
+          <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
             {film.year} · {film.runtime} · {film.rating} · {film.genre} · {film.region}
           </p>
+
           {film.award ? (
             <p className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-gold">
               {film.award}
