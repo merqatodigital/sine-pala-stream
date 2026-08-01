@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useMyList } from "@/hooks/use-my-list";
+import { useLanguage, type TranslationKey } from "@/lib/i18n";
 
 export function Wordmark({ className = "" }: { className?: string }) {
   return (
@@ -21,20 +22,33 @@ export function Wordmark({ className = "" }: { className?: string }) {
   );
 }
 
-const navItems = [
-  "Home",
-  "Films",
-  "Series",
-  "Shorts",
-  "Collections",
-  "Regions",
-] as const;
+const navItems: TranslationKey[] = ["home", "films", "series", "shorts", "collections", "regions"];
 
-const notifications = [
-  { title: "9 new Cinemalaya 2026 titles added", time: "Today" },
-  { title: "A.ni.mál trailer now available", time: "Today" },
-  { title: "Shorts A & B program announced", time: "This week" },
-];
+function LanguageToggle() {
+  const { language, setLanguage } = useLanguage();
+  return (
+    <div className="flex items-center rounded-full border border-border bg-card p-0.5 text-[11px] font-semibold">
+      <button
+        onClick={() => setLanguage("en")}
+        aria-pressed={language === "en"}
+        className={`rounded-full px-2 py-1 transition-colors ${
+          language === "en" ? "bg-gold text-primary-foreground" : "text-muted-foreground"
+        }`}
+      >
+        EN
+      </button>
+      <button
+        onClick={() => setLanguage("tl")}
+        aria-pressed={language === "tl"}
+        className={`rounded-full px-2 py-1 transition-colors ${
+          language === "tl" ? "bg-gold text-primary-foreground" : "text-muted-foreground"
+        }`}
+      >
+        TL
+      </button>
+    </div>
+  );
+}
 
 type NavCallbacks = {
   onSearch: () => void;
@@ -44,6 +58,7 @@ type NavCallbacks = {
 export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
   const [scrolled, setScrolled] = useState(false);
   const { ids } = useMyList();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -51,6 +66,12 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const notifications: { title: string; time: string }[] = [
+    { title: "9 new Cinemalaya 2026 titles added", time: "Today" },
+    { title: "A.ni.mál trailer now available", time: "Today" },
+    { title: "Shorts A & B program announced", time: "This week" },
+  ];
 
   return (
     <header
@@ -65,8 +86,8 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
             <Wordmark />
           </Link>
           <ul className="hidden items-center gap-6 text-sm lg:flex">
-            {navItems.map((item, i) => (
-              <li key={item}>
+            {navItems.map((key, i) => (
+              <li key={key}>
                 <a
                   href="#"
                   onClick={(e) => e.preventDefault()}
@@ -76,9 +97,9 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
                       ? "font-medium text-foreground"
                       : "font-normal text-muted-foreground/60 transition-colors"
                   }
-                  title={i === 0 ? undefined : "Coming soon"}
+                  title={i === 0 ? undefined : t("comingSoon")}
                 >
-                  {item}
+                  {t(key)}
                 </a>
               </li>
             ))}
@@ -86,9 +107,11 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
         </div>
 
         <div className="flex shrink-0 items-center gap-3 lg:gap-5">
+          <LanguageToggle />
+
           <button
             onClick={onSearch}
-            aria-label="Search"
+            aria-label={t("search")}
             className="grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
             <Search className="size-[18px]" />
@@ -97,7 +120,7 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                aria-label="Notifications"
+                aria-label={t("notifications")}
                 className="relative hidden size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground lg:grid"
               >
                 <Bell className="size-[18px]" />
@@ -105,7 +128,7 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-72">
-              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("notifications")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               {notifications.map((n) => (
                 <DropdownMenuItem key={n.title} className="flex-col items-start gap-0.5 whitespace-normal">
@@ -120,7 +143,7 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
             onClick={onOpenMyList}
             className="hidden items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:flex"
           >
-            My List
+            {t("myList")}
             {ids.length > 0 ? (
               <span className="grid size-4 place-items-center rounded-full bg-gold text-[10px] font-semibold text-primary-foreground">
                 {ids.length}
@@ -136,14 +159,14 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>Not signed in</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("notSignedIn")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => toast("Accounts are coming soon")}>
-                Sign in
+                {t("signIn")}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={onOpenMyList}>My List</DropdownMenuItem>
+              <DropdownMenuItem onClick={onOpenMyList}>{t("myList")}</DropdownMenuItem>
               <DropdownMenuItem onClick={() => toast("Settings are coming soon")}>
-                Settings
+                {t("settings")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -154,16 +177,17 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
 }
 
 export function MobileTabBar({ onSearch, onOpenMyList }: NavCallbacks) {
+  const { t } = useLanguage();
   const tabs = [
-    { label: "Home", icon: Home, onClick: undefined },
-    { label: "Search", icon: Search, onClick: onSearch },
-    { label: "My List", icon: Bookmark, onClick: onOpenMyList },
+    { label: t("home"), icon: Home, onClick: undefined },
+    { label: t("search"), icon: Search, onClick: onSearch },
+    { label: t("myList"), icon: Bookmark, onClick: onOpenMyList },
     {
       label: "Profile",
       icon: User,
       onClick: () => toast("Accounts are coming soon"),
     },
-  ] as const;
+  ];
 
   return (
     <nav className="pb-safe fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 backdrop-blur-xl lg:hidden">

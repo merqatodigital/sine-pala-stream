@@ -1,4 +1,5 @@
 import { Wordmark } from "./nav";
+import { useLanguage } from "@/lib/i18n";
 import { shell } from "./layout";
 
 const columns = [
@@ -9,6 +10,7 @@ const columns = [
 ];
 
 export function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="mt-16 border-t border-border bg-card/30 lg:mt-24">
       <div className={`${shell} py-16 lg:py-20`}>
@@ -16,8 +18,7 @@ export function Footer() {
           <div className="col-span-2 sm:col-span-4 lg:col-span-1">
             <Wordmark className="text-lg" />
             <p className="mt-4 max-w-xs text-[13px] leading-[1.6] text-muted-foreground">
-              A streaming home for Filipino independent cinema — festival winners, regional voices,
-              documentaries and shorts.
+              {t("footerTagline")}
             </p>
           </div>
 
@@ -31,7 +32,9 @@ export function Footer() {
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
+                      onClick={(e) => e.preventDefault()}
+                      title={t("comingSoon")}
+                      className="text-[13px] text-muted-foreground/60 transition-colors duration-200"
                     >
                       {link}
                     </a>

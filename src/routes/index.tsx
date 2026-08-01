@@ -10,6 +10,7 @@ import { SearchOverlay } from "@/components/likha/search-overlay";
 import { MyListPanel } from "@/components/likha/my-list-panel";
 import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
 import type { Film } from "@/data/films";
+import { useLanguage } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,6 +37,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
+  const { t } = useLanguage();
   const [selected, setSelected] = useState<Film | null>(null);
   const [autoplayTrailer, setAutoplayTrailer] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -57,15 +59,15 @@ function Home() {
         <Hero onOpen={open} onWatchTrailer={openWithTrailer} />
 
         <Rail
-          title="Cinemalaya 2026 Official Selection"
-          subtitle="Real festival finalists, straight from cinemalaya.org"
+          title={t("officialSelection")}
+          subtitle={t("officialSelectionSubtitle")}
           films={cinemalaya2026FullLength}
           onOpen={open}
         />
 
         <Discover
-          title="Discover"
-          subtitle="A closer look at this year's program"
+          title={t("discover")}
+          subtitle={t("discoverSubtitle")}
           films={cinemalaya2026FullLength}
           onOpen={open}
         />

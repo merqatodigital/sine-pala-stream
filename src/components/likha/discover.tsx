@@ -2,6 +2,7 @@ import { Check, Play, Plus } from "lucide-react";
 import { toast } from "sonner";
 import type { Film } from "@/data/films";
 import { useMyList } from "@/hooks/use-my-list";
+import { useLanguage } from "@/lib/i18n";
 import { sectionGap, shell } from "./layout";
 
 type DiscoverProps = {
@@ -72,6 +73,7 @@ function MyListToggle({ film, size = "size-9" }: { film: Film; size?: string }) 
 }
 
 function SpotlightCard({ film, onOpen }: { film: Film; onOpen: (f: Film) => void }) {
+  const { t } = useLanguage();
   return (
     <div className="group relative col-span-1 aspect-[4/3] overflow-hidden rounded-xl bg-card ring-1 ring-white/5 transition-all duration-300 hover:ring-white/15 lg:col-span-7 lg:aspect-auto lg:h-full lg:min-h-[420px]">
       <button onClick={() => onOpen(film)} className="absolute inset-0 text-left" aria-label={`Open ${film.title}`}>
@@ -85,7 +87,7 @@ function SpotlightCard({ film, onOpen }: { film: Film; onOpen: (f: Film) => void
 
         <div className="absolute inset-x-0 bottom-0 p-5 lg:p-8">
           <span className="rounded-sm bg-black/60 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-gold backdrop-blur-sm">
-            Spotlight
+            {t("spotlight")}
           </span>
           <h3 className="mt-3 font-display text-2xl font-semibold tracking-[-0.01em] text-foreground lg:text-3xl">
             {film.title}
@@ -94,7 +96,7 @@ function SpotlightCard({ film, onOpen }: { film: Film; onOpen: (f: Film) => void
             {film.synopsis}
           </p>
           <p className="mt-3 text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">
-            A film by {film.director}
+            {t("aFilmBy")} {film.director}
           </p>
         </div>
 

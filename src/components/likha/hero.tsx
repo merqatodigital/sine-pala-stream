@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
 import type { Film } from "@/data/films";
 import { useMyList } from "@/hooks/use-my-list";
+import { useLanguage } from "@/lib/i18n";
 import { shell } from "./layout";
 
 const featured = cinemalaya2026FullLength[0];
@@ -17,6 +18,7 @@ export function Hero({
   const hasTrailer = Boolean(featured.trailerYoutubeId);
   const { isSaved, toggle } = useMyList();
   const saved = isSaved(featured.id);
+  const { t } = useLanguage();
 
   return (
     <section className="relative -mt-14 w-full overflow-hidden lg:-mt-16">
@@ -51,7 +53,7 @@ export function Hero({
             <div className="max-w-xl">
               <div className="mb-6 flex flex-wrap items-center gap-2">
                 <span className="rounded-full border border-festival/40 bg-festival/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-festival">
-                  {featured.award ?? "Cinemalaya 2026 Official Selection"}
+                  {featured.award ?? t("officialSelection")}
                 </span>
                 <span className="rounded-full border border-white/12 bg-black/20 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
                   {featured.year} · {featured.genre} · {featured.runtime}
@@ -63,7 +65,7 @@ export function Hero({
               </h1>
 
               <p className="mt-3 text-sm font-medium uppercase tracking-[0.1em] text-muted-foreground">
-                A film by {featured.director}
+                {t("aFilmBy")} {featured.director}
               </p>
 
               <p className="mt-6 text-pretty text-[15px] leading-[1.6] text-foreground/85 lg:text-base">
@@ -76,7 +78,7 @@ export function Hero({
                   className="inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all duration-200 hover:scale-[1.03] hover:brightness-95 active:scale-[0.98]"
                 >
                   <Play className="size-4 fill-current" />
-                  Play Now · ₱{featured.price}
+                  {t("playNow")} · ₱{featured.price}
                 </button>
                 {hasTrailer ? (
                   <button
@@ -84,7 +86,7 @@ export function Hero({
                     className="inline-flex items-center gap-2 rounded-md border border-white/25 bg-white/5 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur-md transition-all duration-200 hover:scale-[1.03] hover:bg-white/10 active:scale-[0.98]"
                   >
                     <FilmIcon className="size-4" />
-                    Watch Trailer
+                    {t("watchTrailer")}
                   </button>
                 ) : null}
                 <button
@@ -104,12 +106,12 @@ export function Hero({
                   }`}
                 >
                   {saved ? <Check className="size-4" /> : <Plus className="size-4" />}
-                  {saved ? "In My List" : "My List"}
+                  {saved ? t("inMyList") : t("myList")}
                 </button>
               </div>
 
               <p className="mt-5 text-[11px] font-medium tracking-[0.06em] text-muted-foreground">
-                7-day access · 1080p · English and Filipino subtitles
+                {t("accessTerms")}
               </p>
             </div>
           </div>

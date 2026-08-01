@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Search, X } from "lucide-react";
 import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
 import type { Film } from "@/data/films";
+import { useLanguage } from "@/lib/i18n";
 import { shell } from "./layout";
 
 export function SearchOverlay({
@@ -14,6 +15,7 @@ export function SearchOverlay({
   onOpenFilm: (film: Film) => void;
 }) {
   const [query, setQuery] = useState("");
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!open) return;
@@ -48,7 +50,7 @@ export function SearchOverlay({
           autoFocus
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search films, directors, genres…"
+          placeholder={t("searchPlaceholder")}
           className="w-full bg-transparent text-lg text-foreground placeholder:text-muted-foreground focus:outline-none"
         />
         <button

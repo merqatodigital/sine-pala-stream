@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { priceLabel, tierLabel } from "@/data/films";
 import type { Film } from "@/data/films";
 import { useMyList } from "@/hooks/use-my-list";
+import { useLanguage } from "@/lib/i18n";
 
 export function FilmDetail({
   film,
@@ -17,6 +18,7 @@ export function FilmDetail({
   const [isPreviewing, setIsPreviewing] = useState(false);
   const [step, setStep] = useState<"details" | "confirmRental">("details");
   const { isSaved, toggle } = useMyList();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!film) return;
@@ -118,7 +120,7 @@ export function FilmDetail({
               className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-3 py-1.5 text-xs font-medium text-foreground backdrop-blur-sm transition-colors hover:bg-black/75"
             >
               <ChevronLeft className="size-3.5" />
-              Back
+              {t("back")}
             </button>
           ) : null}
 
@@ -148,37 +150,33 @@ export function FilmDetail({
 
           <p className="mt-4 text-sm leading-relaxed text-foreground/85">{film.synopsis}</p>
           <p className="mt-3 text-[13px] text-muted-foreground">
-            Directed by <span className="text-foreground">{film.director}</span> ·{" "}
+            {t("directedBy")} <span className="text-foreground">{film.director}</span> ·{" "}
             {tierLabel[film.tier]}
           </p>
 
           {step === "confirmRental" ? (
             <div className="mt-6 rounded-lg border border-white/15 p-4">
-              <p className="text-sm font-semibold text-foreground">Confirm rental</p>
+              <p className="text-sm font-semibold text-foreground">{t("confirmRental")}</p>
               <div className="mt-3 flex items-center justify-between text-sm text-muted-foreground">
                 <span>{film.title}</span>
                 <span className="text-foreground">{priceLabel(film)}</span>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">
-                7-day access · 1080p · EN &amp; FIL subtitles
-              </p>
+              <p className="mt-1 text-xs text-muted-foreground">{t("accessTerms")}</p>
               <div className="mt-4 flex gap-2.5">
                 <button
                   onClick={handleConfirmRental}
                   className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform active:scale-[0.97]"
                 >
-                  Confirm Rental (Demo)
+                  {t("confirmRentalCta")}
                 </button>
                 <button
                   onClick={() => setStep("details")}
                   className="rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
                 >
-                  Cancel
+                  {t("cancel")}
                 </button>
               </div>
-              <p className="mt-3 text-[11px] text-muted-foreground">
-                Demo checkout — no payment method is charged.
-              </p>
+              <p className="mt-3 text-[11px] text-muted-foreground">{t("demoCheckoutNote")}</p>
             </div>
           ) : (
             <div className="mt-6 flex flex-wrap items-center gap-2.5">
@@ -188,7 +186,7 @@ export function FilmDetail({
                   className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
                 >
                   <Play className="size-4 fill-current" />
-                  {isPreviewing ? "Replay Trailer" : "Watch Trailer"}
+                  {isPreviewing ? t("replayTrailer") : t("watchTrailer")}
                 </button>
               ) : null}
               <button
@@ -203,7 +201,7 @@ export function FilmDetail({
                   toggle(film.id);
                   toast.success(saved ? `Removed "${film.title}" from My List` : `Added "${film.title}" to My List`);
                 }}
-                aria-label={saved ? "Remove from My List" : "Add to My List"}
+                aria-label={saved ? t("removeFromMyList") : t("addToMyList")}
                 aria-pressed={saved}
                 className={`grid size-11 place-items-center rounded-md border text-foreground transition-colors ${
                   saved ? "border-gold bg-gold/10 text-gold" : "border-white/15 hover:bg-white/10"
@@ -213,16 +211,14 @@ export function FilmDetail({
               </button>
               <button
                 onClick={handleShare}
-                aria-label="Share"
+                aria-label={t("share")}
                 className="grid size-11 place-items-center rounded-md border border-white/15 text-foreground transition-colors hover:bg-white/10"
               >
                 <Share2 className="size-4" />
               </button>
             </div>
           )}
-          <p className="mt-3 text-[11px] text-muted-foreground">
-            7-day access · 1080p · English and Filipino subtitles
-          </p>
+          <p className="mt-3 text-[11px] text-muted-foreground">{t("accessTerms")}</p>
         </div>
       </div>
     </div>
