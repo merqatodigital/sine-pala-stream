@@ -22,7 +22,14 @@ export function Wordmark({ className = "" }: { className?: string }) {
   );
 }
 
-const navItems: TranslationKey[] = ["home", "films", "series", "shorts", "collections", "regions"];
+const navItems: { key: TranslationKey; href: string }[] = [
+  { key: "home", href: "/" },
+  { key: "films", href: "/browse/films" },
+  { key: "series", href: "/browse/series" },
+  { key: "shorts", href: "/browse/shorts" },
+  { key: "collections", href: "/browse/collections" },
+  { key: "regions", href: "/browse/luzon" },
+];
 
 function LanguageToggle() {
   const { language, setLanguage } = useLanguage();
@@ -86,21 +93,16 @@ export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
             <Wordmark />
           </Link>
           <ul className="hidden items-center gap-6 text-sm lg:flex">
-            {navItems.map((key, i) => (
+            {navItems.map(({ key, href }) => (
               <li key={key}>
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
-                  aria-disabled={i !== 0}
-                  className={
-                    i === 0
-                      ? "font-medium text-foreground"
-                      : "font-normal text-muted-foreground/60 transition-colors"
-                  }
-                  title={i === 0 ? undefined : t("comingSoon")}
+                <Link
+                  to={href}
+                  activeOptions={{ exact: true }}
+                  className="font-normal text-muted-foreground transition-colors hover:text-foreground"
+                  activeProps={{ className: "font-medium text-foreground" }}
                 >
                   {t(key)}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

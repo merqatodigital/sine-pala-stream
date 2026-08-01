@@ -1,12 +1,47 @@
+import { Link } from "@tanstack/react-router";
 import { Wordmark } from "./nav";
 import { useLanguage } from "@/lib/i18n";
 import { shell } from "./layout";
 
 const columns = [
-  { title: "Browse", links: ["Films", "Series", "Shorts", "Documentaries", "Collections"] },
-  { title: "Regions", links: ["Luzon", "Visayas", "Mindanao", "Cordillera", "Diaspora"] },
-  { title: "Filmmakers", links: ["Submit a film", "Distribution", "Festival partners", "Press kit"] },
-  { title: "Support", links: ["Help center", "Rental terms", "Privacy", "Contact"] },
+  {
+    title: "Browse",
+    links: [
+      { label: "Films", href: "/browse/films" },
+      { label: "Series", href: "/browse/series" },
+      { label: "Shorts", href: "/browse/shorts" },
+      { label: "Documentaries", href: "/browse/documentaries" },
+      { label: "Collections", href: "/browse/collections" },
+    ],
+  },
+  {
+    title: "Regions",
+    links: [
+      { label: "Luzon", href: "/browse/luzon" },
+      { label: "Visayas", href: "/browse/visayas" },
+      { label: "Mindanao", href: "/browse/mindanao" },
+      { label: "Cordillera", href: "/browse/cordillera" },
+      { label: "Diaspora", href: "/browse/diaspora" },
+    ],
+  },
+  {
+    title: "Filmmakers",
+    links: [
+      { label: "Submit a film", href: "/coming-soon/submit-a-film" },
+      { label: "Distribution", href: "/coming-soon/distribution" },
+      { label: "Festival partners", href: "/coming-soon/festival-partners" },
+      { label: "Press kit", href: "/coming-soon/press-kit" },
+    ],
+  },
+  {
+    title: "Support",
+    links: [
+      { label: "Help center", href: "/coming-soon/help-center" },
+      { label: "Rental terms", href: "/coming-soon/rental-terms" },
+      { label: "Privacy", href: "/coming-soon/privacy" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
 ];
 
 export function Footer() {
@@ -29,15 +64,13 @@ export function Footer() {
               </h3>
               <ul className="mt-4 space-y-3">
                 {col.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      onClick={(e) => e.preventDefault()}
-                      title={t("comingSoon")}
-                      className="text-[13px] text-muted-foreground/60 transition-colors duration-200"
+                  <li key={link.label}>
+                    <Link
+                      to={link.href}
+                      className="text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
                     >
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
