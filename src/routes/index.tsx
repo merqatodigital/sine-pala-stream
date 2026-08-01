@@ -9,11 +9,9 @@ import { Footer } from "@/components/likha/footer";
 import {
   awardWinners,
   classics,
-  continueWatching,
   curatedCollection,
   luzon,
   newReleases,
-  popular,
   shortsAndDocs,
 } from "@/data/films";
 import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
@@ -43,6 +41,17 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+// Placeholder watch-progress until real accounts + rental history exist.
+// Films themselves are real Cinemalaya 2026 titles with real trailers.
+const CONTINUE_WATCHING_PROGRESS = [62, 28, 81, 14];
+const continueWatchingReal: Film[] = cinemalaya2026FullLength
+  .slice(0, 4)
+  .map((film, i) => ({ ...film, progress: CONTINUE_WATCHING_PROGRESS[i] }));
+// Same 9 real titles as the selection rail above, reordered so the row
+// doesn't look like a literal duplicate until there's enough catalog depth
+// to make "Popular" a genuinely different subset.
+const popularReal: Film[] = [...cinemalaya2026FullLength].reverse();
+
 function Home() {
   const [selected, setSelected] = useState<Film | null>(null);
   const [autoplayTrailer, setAutoplayTrailer] = useState(false);
@@ -70,13 +79,13 @@ function Home() {
 
         <Rail
           title="Continue Watching"
-          films={continueWatching}
+          films={continueWatchingReal}
           onOpen={open}
         />
         <Rail
           title="Popular in the Philippines"
           subtitle="What the country is renting this week"
-          films={popular}
+          films={popularReal}
           onOpen={open}
         />
         <Rail title="New Releases" subtitle="Premieres and fresh festival runs" films={newReleases} onOpen={open} />
