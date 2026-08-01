@@ -159,3 +159,168 @@ export const cinemalaya2026FullLength: Film[] = [
     trailerYoutubeId: "7KlhI8CFX_w",
   }),
 ];
+
+// Real Cinemalaya 2026 Official Shorts Selection (Shorts A & B)
+// Source: cinemalaya.org (scraped 2026-08-01). "HOY, HOY, INGAT!" featured first per request.
+export const cinemalaya2026Shorts: Film[] = [
+  f({
+    id: "hoy-hoy-ingat-hey-hey-take-care",
+    title: "HOY, HOY, INGAT! (Hey, Hey, Take Care!)",
+    director: "Norvin de los Santos",
+    year: 2026,
+    runtime: "20m",
+    genre: "Magic Realism, Social Dramedy",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "PG",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/HoyHoyIngatPoster-4-20x30-1.jpg",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/HoyHoyIngatPoster-4-20x30-1.jpg",
+    synopsis: "Baby dreams not only of viral fame but of elevating the mundane. Her brother Bhing, a beautiful yet ailing boy, hustles on the streets, tending to the “obsolete mammoths” of the road, then hustles more to make ends meet. As spectres of homelessness, hunger and fascism draw near, the siblings embark on a mission to reclaim their beloved family vehicle from a guarded junkyard and fulfill a job order from a film worker. This quest seems to be their only hope for a homecoming to the countryside – blending humor, whimsy and music in a fairytale-like narrative of nostalgia, grief, dream making and the pursuit of resistance amidst a developing urban nightmare.",
+    trailerYoutubeId: "VbURFM4SjY4",
+  }),
+  f({
+    id: "silkscreen",
+    title: "SILKSCREEN",
+    director: "Rey Anthony Villaverde",
+    year: 2026,
+    runtime: "17m 55s",
+    genre: "Drama",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "PG",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/SILKSCREEN_June-2026-Poster.jpg",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/SILKSCREEN_June-2026-Poster.jpg",
+    synopsis: "Roy is a T-shirt silkscreen printer trying to keep their once-thriving family shop from fading into obscurity. Inside a small, worn-down silkscreen studio, he juggles a growing pile of orders to keep the business afloat while struggling to confront what has long remained.",
+    trailerYoutubeId: "hCoXeSYqukQ",
+  }),
+  f({
+    id: "honey-my-love-so-sweet",
+    title: "HONEY, MY LOVE, SO SWEET",
+    director: "JT Trinidad",
+    year: 2026,
+    runtime: "20m",
+    genre: "Queer, Coming-of-age",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "R-13",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/Honey-My-Love-so-Sweet.png",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/Honey-My-Love-so-Sweet.png",
+    synopsis: "In 2000s Manila, an androgynous kid named Life and their mother arrive at an old cinema facing demolition, where Life forms a close friendship with Gab, the projectionist’s son. As Gab navigates love in Life’s presence, Life develops a strange fascination with Gab’s father.",
+    trailerYoutubeId: "ZSJgaZRxqeA",
+  }),
+  f({
+    id: "runo",
+    title: "RUNO!",
+    director: "Lysa Catolico and Jazmine Gin R. Pateña",
+    year: 2026,
+    runtime: "13m 57s",
+    genre: "Animation, Comedy",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "PG",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/RUNO-Poster-Cinemalaya.png",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/RUNO-Poster-Cinemalaya.png",
+    synopsis: "A hungry rescue dog named Runo heads to find her owner, Aimee, in the midst of a zombie apocalypse. She escapes near-death encounters, but still gets bitten in the end. In an act of sheer love, Aimee refuses to give up on Runo.",
+    trailerYoutubeId: "i8ca0svbTFg",
+  }),
+  f({
+    id: "para-paraan-finding-a-way-through",
+    title: "PARA PARAAN (Finding a Way Through)",
+    director: "Mae Chan Li",
+    year: 2026,
+    runtime: "10m 3s",
+    genre: "Documentary, Social Issues, Disability, Human Rights",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "PG",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/Para-paraan-2025-scaled.jpg",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/Para-paraan-2025-scaled.jpg",
+    synopsis: "Kat, a wheelchair user, navigates a city where access is often improvised and inclusion remains uneven. Through everyday encounters and quiet observations, Para-Paraan (Finding a Way Through) reveals the barriers embedded within ordinary spaces and the constant adjustments required to move through them.",
+    trailerYoutubeId: "h_-ze55RXrg",
+  }),
+  f({
+    id: "the-river-flows-in-different-places",
+    title: "THE RIVER FLOWS IN DIFFERENT PLACES",
+    director: "Lot-Lot Hermosura",
+    year: 2026,
+    runtime: "19m 59s",
+    genre: "Documentary",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "PG",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/The-River-Flows-in-Different-Places.png",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/The-River-Flows-in-Different-Places.png",
+    synopsis: "The aftermath of the October 7 war forced millions of Palestinians to flee Gaza. Among the displaced is the family of Filipino-Palestinian mothers Net and Maha. Both women recount their harrowing journey to the Philippines, a land both foreign and familiar. The film unfolds as a family diary – a collection of intimate interviews, personal photographs, home videos, and illustrations that reflect cultural duality, the search for belonging, and resistance through remembering.",
+    trailerYoutubeId: "SiAr5dw2Zro",
+  }),
+  f({
+    id: "elenita-elena-elaine",
+    title: "ELENITA ELENA ELAINE",
+    director: "Gabriela Serrano",
+    year: 2026,
+    runtime: "19m 39s",
+    genre: "Sci-Fi, Drama",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "R-13",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/ELENITA-ELENA-ELAINE_POSTER_RGB-DIGITAL.jpg",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/ELENITA-ELENA-ELAINE_POSTER_RGB-DIGITAL.jpg",
+    synopsis: "A pop idol prepares for what will become her final TV performance. A young graduate packs up her room to go work abroad. A call center agent lets her voice fade against a wall of noise. On this long night, in a reality where people have ceased to dream, three women’s mundane routines and subconscious worlds collide – revealing wishes, regrets, and versions of themselves that they keep from one other. Will dawn bring more silence, or a shimmering song?",
+    trailerYoutubeId: "MUiPAmY4vOU",
+  }),
+  f({
+    id: "kung-paano-kakalas-never-been-there-never",
+    title: "kung paano kakalas (never been there, never)",
+    director: "Joseph Vitali",
+    year: 2026,
+    runtime: "19m 40s",
+    genre: "Slice of Life",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "PG",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/kung-paano-kakalas.jpg",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/kung-paano-kakalas.jpg",
+    synopsis: "Edison, a street vendor in Manila, must sell all his remaining sherbet products before he can go home and celebrate Christmas. When his usual stall has no customers, he must find a way to look for buyers, chasing the chance to finally rest. Set against the holiday cheer, this documentary portrays the humanized persona of a young adult working hard to earn his right to celebrate.",
+    trailerYoutubeId: "EtHDnVIyWaA",
+  }),
+  f({
+    id: "sorbetes-ice-cream",
+    title: "SORBETES (ICE CREAM)",
+    director: "Jennissie Gilbuena",
+    year: 2026,
+    runtime: "12m 4s",
+    genre: "Narrative Drama",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "PG",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/Sorbetes_Poster.png",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/Sorbetes_Poster.png",
+    synopsis: "Set in a barangay near a shoal, two brothers cope with the aftermath of a traumatic event that shook their community. In their own ways, they seek solace and comfort amidst the chaos. While the older brother struggles with his emotions, the younger finds unexpected relief in eating sorbetes.",
+    trailerYoutubeId: "b-xR3U7x-JM",
+  }),
+  f({
+    id: "the-keeper",
+    title: "THE KEEPER",
+    director: "Nolan Rae Fabular",
+    year: 2026,
+    runtime: "7m 45s",
+    genre: "Psychological Drama",
+    region: "Cinemalaya 2026 Official Selection", // TODO: source has no PH-region tag
+    rating: "G",
+    price: 29, // TODO: confirm real rental price for shorts
+    tier: "short",
+    still: "https://www.cinemalaya.org/wp-content/uploads/2026/07/The-Keeper.jpg",
+    poster: "https://www.cinemalaya.org/wp-content/uploads/2026/07/The-Keeper.jpg",
+    synopsis: "In a meticulously ordered trophy hall, a devoted keeper obsessively guards perfection – until an unexpected intruder disrupts her carefully controlled world. As she hunts the unwelcome presence, she slowly uncovers a quiet truth: life has been unfolding inside the confines of her own careful curation.",
+    trailerYoutubeId: "ivumsoPdoS8",
+  }),
+];

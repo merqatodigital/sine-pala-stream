@@ -8,7 +8,7 @@ import { FilmDetail } from "@/components/likha/film-detail";
 import { Footer } from "@/components/likha/footer";
 import { SearchOverlay } from "@/components/likha/search-overlay";
 import { MyListPanel } from "@/components/likha/my-list-panel";
-import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
+import { cinemalaya2026FullLength, cinemalaya2026Shorts } from "@/data/films-cinemalaya-2026";
 import type { Film } from "@/data/films";
 import { useLanguage } from "@/lib/i18n";
 
@@ -62,6 +62,13 @@ function Home() {
           title={t("officialSelection")}
           subtitle={t("officialSelectionSubtitle")}
           films={cinemalaya2026FullLength}
+          onOpen={open}
+        />
+
+        <Discover
+          title={t("shortsSection")}
+          subtitle={t("shortsSectionSubtitle")}
+          films={cinemalaya2026Shorts}
           onOpen={open}
         />
 

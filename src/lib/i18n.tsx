@@ -58,6 +58,11 @@ const dictionary = {
   removeFromMyList: { en: "Remove from My List", tl: "Alisin sa Listahan Ko" },
   addToMyList: { en: "Add to My List", tl: "Idagdag sa Listahan Ko" },
   share: { en: "Share", tl: "Ibahagi" },
+  shortsSection: { en: "Shorts", tl: "Maiikling Pelikula" },
+  shortsSectionSubtitle: {
+    en: "Featured short films from the 2026 program",
+    tl: "Mga tampok na maikling pelikula sa programa ngayong 2026",
+  },
 } as const;
 
 export type TranslationKey = keyof typeof dictionary;

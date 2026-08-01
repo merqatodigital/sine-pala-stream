@@ -1,4 +1,4 @@
-import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
+import { cinemalaya2026FullLength, cinemalaya2026Shorts } from "@/data/films-cinemalaya-2026";
 import type { Film } from "@/data/films";
 
 export type BrowseSlug =
@@ -29,12 +29,12 @@ export const browseCatalog: Record<BrowseSlug, BrowseEntry> = {
   films: {
     title: "Films",
     emptyMessage: "No full-length films yet.",
-    films: () => cinemalaya2026FullLength.filter((f) => f.tier !== "short"),
+    films: () => cinemalaya2026FullLength,
   },
   shorts: {
     title: "Shorts",
     emptyMessage: "No shorts published yet.",
-    films: () => cinemalaya2026FullLength.filter((f) => f.tier === "short"),
+    films: () => cinemalaya2026Shorts,
   },
   series: {
     title: "Series",
