@@ -1,6 +1,8 @@
-import { Play, Plus, Film as FilmIcon } from "lucide-react";
+import { Check, Play, Plus, Film as FilmIcon } from "lucide-react";
+import { toast } from "sonner";
 import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
 import type { Film } from "@/data/films";
+import { useMyList } from "@/hooks/use-my-list";
 import { shell } from "./layout";
 
 const featured = cinemalaya2026FullLength[0];
@@ -13,6 +15,8 @@ export function Hero({
   onWatchTrailer: (film: Film) => void;
 }) {
   const hasTrailer = Boolean(featured.trailerYoutubeId);
+  const { isSaved, toggle } = useMyList();
+  const saved = isSaved(featured.id);
 
   return (
     <section className="relative -mt-14 w-full overflow-hidden lg:-mt-16">
@@ -84,11 +88,23 @@ export function Hero({
                   </button>
                 ) : null}
                 <button
-                  onClick={() => onOpen(featured)}
-                  className="inline-flex items-center gap-2 rounded-md border border-white/25 px-6 py-3 text-sm font-semibold text-foreground transition-all duration-200 hover:scale-[1.03] hover:bg-white/10 active:scale-[0.98]"
+                  onClick={() => {
+                    toggle(featured.id);
+                    toast.success(
+                      saved
+                        ? `Removed "${featured.title}" from My List`
+                        : `Added "${featured.title}" to My List`,
+                    );
+                  }}
+                  aria-pressed={saved}
+                  className={`inline-flex items-center gap-2 rounded-md border px-6 py-3 text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] ${
+                    saved
+                      ? "border-gold bg-gold/10 text-gold"
+                      : "border-white/25 text-foreground hover:bg-white/10"
+                  }`}
                 >
-                  <Plus className="size-4" />
-                  My List
+                  {saved ? <Check className="size-4" /> : <Plus className="size-4" />}
+                  {saved ? "In My List" : "My List"}
                 </button>
               </div>
 

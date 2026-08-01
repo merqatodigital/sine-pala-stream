@@ -6,6 +6,8 @@ import { Rail } from "@/components/likha/rail";
 import { Discover } from "@/components/likha/discover";
 import { FilmDetail } from "@/components/likha/film-detail";
 import { Footer } from "@/components/likha/footer";
+import { SearchOverlay } from "@/components/likha/search-overlay";
+import { MyListPanel } from "@/components/likha/my-list-panel";
 import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
 import type { Film } from "@/data/films";
 
@@ -36,6 +38,9 @@ export const Route = createFileRoute("/")({
 function Home() {
   const [selected, setSelected] = useState<Film | null>(null);
   const [autoplayTrailer, setAutoplayTrailer] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [myListOpen, setMyListOpen] = useState(false);
+
   const open = (film: Film) => {
     setSelected(film);
     setAutoplayTrailer(false);
@@ -47,7 +52,7 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-background pb-20 lg:pb-0">
-      <TopNav />
+      <TopNav onSearch={() => setSearchOpen(true)} onOpenMyList={() => setMyListOpen(true)} />
       <main>
         <Hero onOpen={open} onWatchTrailer={openWithTrailer} />
 
@@ -67,12 +72,14 @@ function Home() {
       </main>
 
       <Footer />
-      <MobileTabBar />
+      <MobileTabBar onSearch={() => setSearchOpen(true)} onOpenMyList={() => setMyListOpen(true)} />
       <FilmDetail
         film={selected}
         autoplayTrailer={autoplayTrailer}
         onClose={() => setSelected(null)}
       />
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} onOpenFilm={open} />
+      <MyListPanel open={myListOpen} onClose={() => setMyListOpen(false)} onOpenFilm={open} />
     </div>
   );
 }

@@ -1,6 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { Search, Bell, Home, Bookmark, User } from "lucide-react";
+import { Bell, Bookmark, Home, Search, User } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useMyList } from "@/hooks/use-my-list";
 
 export function Wordmark({ className = "" }: { className?: string }) {
   return (
@@ -20,8 +30,20 @@ const navItems = [
   "Regions",
 ] as const;
 
-export function TopNav() {
+const notifications = [
+  { title: "9 new Cinemalaya 2026 titles added", time: "Today" },
+  { title: "A.ni.mál trailer now available", time: "Today" },
+  { title: "Shorts A & B program announced", time: "This week" },
+];
+
+type NavCallbacks = {
+  onSearch: () => void;
+  onOpenMyList: () => void;
+};
+
+export function TopNav({ onSearch, onOpenMyList }: NavCallbacks) {
   const [scrolled, setScrolled] = useState(false);
+  const { ids } = useMyList();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -47,11 +69,14 @@ export function TopNav() {
               <li key={item}>
                 <a
                   href="#"
+                  onClick={(e) => e.preventDefault()}
+                  aria-disabled={i !== 0}
                   className={
                     i === 0
                       ? "font-medium text-foreground"
-                      : "font-normal text-muted-foreground transition-colors hover:text-foreground"
+                      : "font-normal text-muted-foreground/60 transition-colors"
                   }
+                  title={i === 0 ? undefined : "Coming soon"}
                 >
                   {item}
                 </a>
@@ -62,52 +87,96 @@ export function TopNav() {
 
         <div className="flex shrink-0 items-center gap-3 lg:gap-5">
           <button
+            onClick={onSearch}
             aria-label="Search"
             className="grid size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
             <Search className="size-[18px]" />
           </button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                aria-label="Notifications"
+                className="relative hidden size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground lg:grid"
+              >
+                <Bell className="size-[18px]" />
+                <span className="absolute right-1.5 top-1.5 size-1.5 rounded-full bg-gold" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-72">
+              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {notifications.map((n) => (
+                <DropdownMenuItem key={n.title} className="flex-col items-start gap-0.5 whitespace-normal">
+                  <span className="text-sm text-foreground">{n.title}</span>
+                  <span className="text-xs text-muted-foreground">{n.time}</span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <button
-            aria-label="Notifications"
-            className="hidden size-9 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground lg:grid"
-          >
-            <Bell className="size-[18px]" />
-          </button>
-          <a
-            href="#"
-            className="hidden text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:block"
+            onClick={onOpenMyList}
+            className="hidden items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground lg:flex"
           >
             My List
-          </a>
-          <button
-            aria-label="Profile"
-            className="size-8 shrink-0 rounded-full bg-gradient-to-br from-gold to-festival ring-1 ring-white/15"
-          />
+            {ids.length > 0 ? (
+              <span className="grid size-4 place-items-center rounded-full bg-gold text-[10px] font-semibold text-primary-foreground">
+                {ids.length}
+              </span>
+            ) : null}
+          </button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                aria-label="Profile"
+                className="size-8 shrink-0 rounded-full bg-gradient-to-br from-gold to-festival ring-1 ring-white/15"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Not signed in</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => toast("Accounts are coming soon")}>
+                Sign in
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onOpenMyList}>My List</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => toast("Settings are coming soon")}>
+                Settings
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </nav>
     </header>
   );
 }
 
-const tabs = [
-  { label: "Home", icon: Home, active: true },
-  { label: "Search", icon: Search, active: false },
-  { label: "My List", icon: Bookmark, active: false },
-  { label: "Profile", icon: User, active: false },
-];
+export function MobileTabBar({ onSearch, onOpenMyList }: NavCallbacks) {
+  const tabs = [
+    { label: "Home", icon: Home, onClick: undefined },
+    { label: "Search", icon: Search, onClick: onSearch },
+    { label: "My List", icon: Bookmark, onClick: onOpenMyList },
+    {
+      label: "Profile",
+      icon: User,
+      onClick: () => toast("Accounts are coming soon"),
+    },
+  ] as const;
 
-export function MobileTabBar() {
   return (
     <nav className="pb-safe fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 backdrop-blur-xl lg:hidden">
       <ul className="mx-auto grid max-w-md grid-cols-4">
-        {tabs.map(({ label, icon: Icon, active }) => (
+        {tabs.map(({ label, icon: Icon, onClick }, i) => (
           <li key={label}>
             <button
+              onClick={onClick}
               className={`flex w-full flex-col items-center gap-1 py-2.5 text-[10px] font-medium tracking-wide transition-colors active:scale-95 ${
-                active ? "text-gold" : "text-muted-foreground"
+                i === 0 ? "text-gold" : "text-muted-foreground"
               }`}
             >
-              <Icon className="size-5" strokeWidth={active ? 2.2 : 1.8} />
+              <Icon className="size-5" strokeWidth={i === 0 ? 2.2 : 1.8} />
               {label}
             </button>
           </li>

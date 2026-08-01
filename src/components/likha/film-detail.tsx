@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { ChevronLeft, Play, Plus, Share2, X } from "lucide-react";
+import { Check, ChevronLeft, Play, Plus, Share2, X } from "lucide-react";
+import { toast } from "sonner";
 import { priceLabel, tierLabel } from "@/data/films";
 import type { Film } from "@/data/films";
+import { useMyList } from "@/hooks/use-my-list";
 
 export function FilmDetail({
   film,
@@ -13,6 +15,8 @@ export function FilmDetail({
   onClose: () => void;
 }) {
   const [isPreviewing, setIsPreviewing] = useState(false);
+  const [step, setStep] = useState<"details" | "confirmRental">("details");
+  const { isSaved, toggle } = useMyList();
 
   useEffect(() => {
     if (!film) return;
@@ -29,11 +33,39 @@ export function FilmDetail({
   // Hero) can request the trailer start playing immediately instead.
   useEffect(() => {
     setIsPreviewing(Boolean(autoplayTrailer && film?.trailerYoutubeId));
+    setStep("details");
   }, [film?.id, autoplayTrailer]);
 
   if (!film) return null;
 
   const hasTrailer = Boolean(film.trailerYoutubeId);
+  const saved = isSaved(film.id);
+
+  const handleShare = async () => {
+    const url = `${window.location.origin}${window.location.pathname}#${film.id}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: film.title, text: film.synopsis, url });
+      } catch {
+        // user cancelled the native share sheet — no error toast needed
+      }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Link copied to clipboard");
+    } catch {
+      toast.error("Couldn't copy link");
+    }
+  };
+
+  const handleConfirmRental = () => {
+    toast.success(`"${film.title}" rental confirmed`, {
+      description: "Demo only — no payment was charged.",
+    });
+    setStep("details");
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center">
@@ -120,27 +152,74 @@ export function FilmDetail({
             {tierLabel[film.tier]}
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-2.5">
-            {hasTrailer ? (
+          {step === "confirmRental" ? (
+            <div className="mt-6 rounded-lg border border-white/15 p-4">
+              <p className="text-sm font-semibold text-foreground">Confirm rental</p>
+              <div className="mt-3 flex items-center justify-between text-sm text-muted-foreground">
+                <span>{film.title}</span>
+                <span className="text-foreground">{priceLabel(film)}</span>
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">
+                7-day access · 1080p · EN &amp; FIL subtitles
+              </p>
+              <div className="mt-4 flex gap-2.5">
+                <button
+                  onClick={handleConfirmRental}
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform active:scale-[0.97]"
+                >
+                  Confirm Rental (Demo)
+                </button>
+                <button
+                  onClick={() => setStep("details")}
+                  className="rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
+                >
+                  Cancel
+                </button>
+              </div>
+              <p className="mt-3 text-[11px] text-muted-foreground">
+                Demo checkout — no payment method is charged.
+              </p>
+            </div>
+          ) : (
+            <div className="mt-6 flex flex-wrap items-center gap-2.5">
+              {hasTrailer ? (
+                <button
+                  onClick={() => setIsPreviewing(true)}
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
+                >
+                  <Play className="size-4 fill-current" />
+                  {isPreviewing ? "Replay Trailer" : "Watch Trailer"}
+                </button>
+              ) : null}
               <button
-                onClick={() => setIsPreviewing(true)}
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
+                onClick={() => setStep("confirmRental")}
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform active:scale-[0.97] sm:flex-none"
               >
                 <Play className="size-4 fill-current" />
-                {isPreviewing ? "Replay Trailer" : "Watch Trailer"}
+                {priceLabel(film)}
               </button>
-            ) : null}
-            <button className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform active:scale-[0.97] sm:flex-none">
-              <Play className="size-4 fill-current" />
-              {priceLabel(film)}
-            </button>
-            <button className="grid size-11 place-items-center rounded-md border border-white/15 text-foreground transition-colors hover:bg-white/10">
-              <Plus className="size-4" />
-            </button>
-            <button className="grid size-11 place-items-center rounded-md border border-white/15 text-foreground transition-colors hover:bg-white/10">
-              <Share2 className="size-4" />
-            </button>
-          </div>
+              <button
+                onClick={() => {
+                  toggle(film.id);
+                  toast.success(saved ? `Removed "${film.title}" from My List` : `Added "${film.title}" to My List`);
+                }}
+                aria-label={saved ? "Remove from My List" : "Add to My List"}
+                aria-pressed={saved}
+                className={`grid size-11 place-items-center rounded-md border text-foreground transition-colors ${
+                  saved ? "border-gold bg-gold/10 text-gold" : "border-white/15 hover:bg-white/10"
+                }`}
+              >
+                {saved ? <Check className="size-4" /> : <Plus className="size-4" />}
+              </button>
+              <button
+                onClick={handleShare}
+                aria-label="Share"
+                className="grid size-11 place-items-center rounded-md border border-white/15 text-foreground transition-colors hover:bg-white/10"
+              >
+                <Share2 className="size-4" />
+              </button>
+            </div>
+          )}
           <p className="mt-3 text-[11px] text-muted-foreground">
             7-day access · 1080p · English and Filipino subtitles
           </p>
