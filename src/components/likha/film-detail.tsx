@@ -1,9 +1,11 @@
-import { useEffect } from "react";
-import { X, Play, Plus, Share2 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronLeft, Play, Plus, Share2, X } from "lucide-react";
 import { priceLabel, tierLabel } from "@/data/films";
 import type { Film } from "@/data/films";
 
 export function FilmDetail({ film, onClose }: { film: Film | null; onClose: () => void }) {
+  const [isPreviewing, setIsPreviewing] = useState(false);
+
   useEffect(() => {
     if (!film) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -15,7 +17,14 @@ export function FilmDetail({ film, onClose }: { film: Film | null; onClose: () =
     };
   }, [film, onClose]);
 
+  // Always reopen on the poster, never mid-preview from a previous film.
+  useEffect(() => {
+    setIsPreviewing(false);
+  }, [film?.id]);
+
   if (!film) return null;
+
+  const hasTrailer = Boolean(film.trailerYoutubeId);
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end justify-center sm:items-center">
@@ -26,14 +35,52 @@ export function FilmDetail({ film, onClose }: { film: Film | null; onClose: () =
       />
       <div className="relative flex max-h-[92svh] w-full flex-col overflow-y-auto rounded-t-2xl bg-card ring-1 ring-white/10 sm:max-h-[88vh] sm:max-w-2xl sm:rounded-2xl">
         <div className="relative shrink-0">
-          <img
-            src={film.still}
-            alt={`${film.title} still`}
-            width={1024}
-            height={576}
-            className="aspect-video w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+          {isPreviewing && hasTrailer ? (
+            <div className="aspect-video w-full bg-black">
+              <iframe
+                key={film.id}
+                src={`https://www.youtube.com/embed/${film.trailerYoutubeId}?autoplay=1&rel=0&modestbranding=1`}
+                title={`${film.title} — trailer preview`}
+                className="size-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <>
+              <img
+                src={film.still}
+                alt={`${film.title} still`}
+                width={1024}
+                height={576}
+                className="aspect-video w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+              {hasTrailer ? (
+                <button
+                  onClick={() => setIsPreviewing(true)}
+                  aria-label={`Play trailer for ${film.title}`}
+                  className="absolute inset-0 grid place-items-center"
+                >
+                  <span className="grid size-16 place-items-center rounded-full bg-black/60 text-foreground backdrop-blur-sm transition-transform hover:scale-110">
+                    <Play className="size-7 fill-current" />
+                  </span>
+                </button>
+              ) : null}
+            </>
+          )}
+
+          {isPreviewing ? (
+            <button
+              onClick={() => setIsPreviewing(false)}
+              aria-label="Back to poster"
+              className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-3 py-1.5 text-xs font-medium text-foreground backdrop-blur-sm transition-colors hover:bg-black/75"
+            >
+              <ChevronLeft className="size-3.5" />
+              Back
+            </button>
+          ) : null}
+
           <button
             onClick={onClose}
             aria-label="Close"
@@ -65,6 +112,15 @@ export function FilmDetail({ film, onClose }: { film: Film | null; onClose: () =
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-2.5">
+            {hasTrailer ? (
+              <button
+                onClick={() => setIsPreviewing(true)}
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
+              >
+                <Play className="size-4 fill-current" />
+                {isPreviewing ? "Replay Trailer" : "Watch Trailer"}
+              </button>
+            ) : null}
             <button className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform active:scale-[0.97] sm:flex-none">
               <Play className="size-4 fill-current" />
               {priceLabel(film)}
