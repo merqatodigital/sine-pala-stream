@@ -16,6 +16,7 @@ import {
   popular,
   shortsAndDocs,
 } from "@/data/films";
+import { cinemalaya2026FullLength } from "@/data/films-cinemalaya-2026";
 import type { Film } from "@/data/films";
 
 export const Route = createFileRoute("/")({
@@ -51,6 +52,13 @@ function Home() {
       <TopNav />
       <main>
         <Hero onOpen={open} />
+
+        <Rail
+          title="Cinemalaya 2026 Official Selection"
+          subtitle="Real festival finalists, straight from cinemalaya.org"
+          films={cinemalaya2026FullLength}
+          onOpen={open}
+        />
 
         <Rail
           title="Continue Watching"
