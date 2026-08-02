@@ -101,7 +101,7 @@ export function Hero({
                     );
                   }}
                   aria-pressed={saved}
-                  className={`inline-flex items-center justify-center gap-2 rounded-md border px-6 py-3 text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] ${
+                  className={`col-span-2 inline-flex items-center justify-center gap-2 rounded-md border px-6 py-3 text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] sm:col-span-1 ${
                     saved
                       ? "border-gold bg-gold/10 text-gold"
                       : "border-white/25 text-foreground hover:bg-white/10"
