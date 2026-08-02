@@ -74,7 +74,7 @@ export function Hero({
                 {featured.synopsis}
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
                 <button
                   onClick={() => onOpen(featured)}
                   className="inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all duration-200 hover:scale-[1.03] hover:brightness-95 active:scale-[0.98]"
