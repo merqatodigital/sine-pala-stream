@@ -22,9 +22,16 @@ export function Hero({
 
   return (
     <section className="relative -mt-14 w-full overflow-hidden lg:-mt-16">
-      <div className="grid min-h-[640px] w-full lg:grid-cols-2">
-        {/* Video panel — muted ambient loop, no controls, no interaction. */}
-        <div className="relative order-1 aspect-video w-full overflow-hidden lg:aspect-auto lg:h-auto">
+      <div className="grid w-full lg:min-h-[640px] lg:grid-cols-2">
+        {/* Media panel — still image on phones/tablets, muted ambient loop on desktop. */}
+        <div className="relative order-1 aspect-[16/10] w-full overflow-hidden sm:aspect-video lg:aspect-auto lg:h-auto">
+          <img
+            src={featured.still}
+            alt={`${featured.title} — featured film still`}
+            width={1280}
+            height={720}
+            className={`absolute inset-0 size-full object-cover ${hasTrailer ? "lg:hidden" : ""}`}
+          />
           {hasTrailer ? (
             <iframe
               key={featured.id}
@@ -32,20 +39,15 @@ export function Hero({
               title={`${featured.title} — ambient preview`}
               aria-hidden="true"
               tabIndex={-1}
-              className="pointer-events-none absolute inset-0 size-full scale-[1.35] object-cover"
+              className="pointer-events-none absolute inset-0 hidden size-full scale-[1.35] object-cover lg:block"
               allow="autoplay; encrypted-media"
             />
-          ) : (
-            <img
-              src={featured.still}
-              alt={`${featured.title} — featured film still`}
-              width={1280}
-              height={720}
-              className="absolute inset-0 size-full object-cover"
-            />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-background" />
+          ) : null}
+          {/* Top scrim keeps the sticky wordmark legible over the media. */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-background/85 to-transparent lg:hidden" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-background" />
         </div>
+
 
         {/* Editorial panel — festival-poster styled credit block. */}
         <div className="order-2 flex items-center bg-background">
