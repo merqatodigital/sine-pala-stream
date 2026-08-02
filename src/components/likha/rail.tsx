@@ -94,17 +94,25 @@ export function FilmCard({
   film,
   variant,
   onOpen,
+  inRail = true,
 }: {
   film: Film;
   variant: "landscape" | "portrait";
   onOpen: (f: Film) => void;
+  /** Rails need fixed percentage widths; grids need the card to fill its cell. */
+  inRail?: boolean;
 }) {
   const portrait = variant === "portrait";
   const { isSaved, toggle } = useMyList();
   const saved = isSaved(film.id);
 
   return (
-    <div className={`group relative ${widths[variant]} shrink-0 snap-start`}>
+    <div
+      className={`group relative ${
+        inRail ? `${widths[variant]} shrink-0 snap-start` : "w-full min-w-0"
+      }`}
+    >
+
       <button
         onClick={() => onOpen(film)}
         className="block w-full text-left"

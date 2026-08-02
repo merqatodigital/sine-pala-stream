@@ -179,44 +179,47 @@ export function FilmDetail({
               <p className="mt-3 text-[11px] text-muted-foreground">{t("demoCheckoutNote")}</p>
             </div>
           ) : (
-            <div className="mt-6 flex flex-wrap items-center gap-2.5">
-              {hasTrailer ? (
-                <button
-                  onClick={() => setIsPreviewing(true)}
-                  className="inline-flex items-center justify-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10"
-                >
-                  <Play className="size-4 fill-current" />
-                  {isPreviewing ? t("replayTrailer") : t("watchTrailer")}
-                </button>
-              ) : null}
+            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
               <button
                 onClick={() => setStep("confirmRental")}
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform active:scale-[0.97] sm:flex-none"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-gold px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform active:scale-[0.97] sm:order-2 sm:w-auto"
               >
                 <Play className="size-4 fill-current" />
                 {priceLabel(film)}
               </button>
-              <button
-                onClick={() => {
-                  toggle(film.id);
-                  toast.success(saved ? `Removed "${film.title}" from My List` : `Added "${film.title}" to My List`);
-                }}
-                aria-label={saved ? t("removeFromMyList") : t("addToMyList")}
-                aria-pressed={saved}
-                className={`grid size-11 place-items-center rounded-md border text-foreground transition-colors ${
-                  saved ? "border-gold bg-gold/10 text-gold" : "border-white/15 hover:bg-white/10"
-                }`}
-              >
-                {saved ? <Check className="size-4" /> : <Plus className="size-4" />}
-              </button>
-              <button
-                onClick={handleShare}
-                aria-label={t("share")}
-                className="grid size-11 place-items-center rounded-md border border-white/15 text-foreground transition-colors hover:bg-white/10"
-              >
-                <Share2 className="size-4" />
-              </button>
+              <div className="flex items-center gap-2.5 sm:order-1">
+                {hasTrailer ? (
+                  <button
+                    onClick={() => setIsPreviewing(true)}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-white/15 px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-white/10 sm:flex-none"
+                  >
+                    <Play className="size-4 fill-current" />
+                    {isPreviewing ? t("replayTrailer") : t("watchTrailer")}
+                  </button>
+                ) : null}
+                <button
+                  onClick={() => {
+                    toggle(film.id);
+                    toast.success(saved ? `Removed "${film.title}" from My List` : `Added "${film.title}" to My List`);
+                  }}
+                  aria-label={saved ? t("removeFromMyList") : t("addToMyList")}
+                  aria-pressed={saved}
+                  className={`grid size-11 shrink-0 place-items-center rounded-md border text-foreground transition-colors ${
+                    saved ? "border-gold bg-gold/10 text-gold" : "border-white/15 hover:bg-white/10"
+                  }`}
+                >
+                  {saved ? <Check className="size-4" /> : <Plus className="size-4" />}
+                </button>
+                <button
+                  onClick={handleShare}
+                  aria-label={t("share")}
+                  className="grid size-11 shrink-0 place-items-center rounded-md border border-white/15 text-foreground transition-colors hover:bg-white/10"
+                >
+                  <Share2 className="size-4" />
+                </button>
+              </div>
             </div>
+
           )}
           <p className="mt-3 text-[11px] text-muted-foreground">{t("accessTerms")}</p>
         </div>

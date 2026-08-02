@@ -42,16 +42,17 @@ function BrowsePage() {
         >
           ← Home
         </Link>
-        <h1 className="mt-3 font-display text-3xl font-semibold tracking-[-0.01em] text-foreground sm:text-4xl">
+        <h1 className="mt-3 font-display text-2xl font-semibold tracking-[-0.01em] text-foreground sm:text-3xl lg:text-4xl">
           {entry ? entry.title : "Not found"}
         </h1>
 
         {films.length > 0 ? (
-          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {films.map((film) => (
-              <FilmCard key={film.id} film={film} variant="portrait" onOpen={open} />
+              <FilmCard key={film.id} film={film} variant="portrait" inRail={false} onOpen={open} />
             ))}
           </div>
+
         ) : (
           <p className="mt-8 max-w-md text-sm leading-relaxed text-muted-foreground">
             {entry ? entry.emptyMessage : "That page doesn't exist."}
