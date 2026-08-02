@@ -77,7 +77,7 @@ export function Hero({
               <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center">
                 <button
                   onClick={() => onOpen(featured)}
-                  className="inline-flex items-center gap-2 rounded-md bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all duration-200 hover:scale-[1.03] hover:brightness-95 active:scale-[0.98]"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all duration-200 hover:scale-[1.03] hover:brightness-95 active:scale-[0.98]"
                 >
                   <Play className="size-4 fill-current" />
                   {t("playNow")} · ₱{featured.price}
@@ -85,7 +85,7 @@ export function Hero({
                 {hasTrailer ? (
                   <button
                     onClick={() => onWatchTrailer(featured)}
-                    className="inline-flex items-center gap-2 rounded-md border border-white/25 bg-white/5 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur-md transition-all duration-200 hover:scale-[1.03] hover:bg-white/10 active:scale-[0.98]"
+                    className="inline-flex items-center justify-center gap-2 rounded-md border border-white/25 bg-white/5 px-6 py-3 text-sm font-semibold text-foreground backdrop-blur-md transition-all duration-200 hover:scale-[1.03] hover:bg-white/10 active:scale-[0.98]"
                   >
                     <FilmIcon className="size-4" />
                     {t("watchTrailer")}
@@ -101,7 +101,7 @@ export function Hero({
                     );
                   }}
                   aria-pressed={saved}
-                  className={`inline-flex items-center gap-2 rounded-md border px-6 py-3 text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] ${
+                  className={`inline-flex items-center justify-center gap-2 rounded-md border px-6 py-3 text-sm font-semibold transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] ${
                     saved
                       ? "border-gold bg-gold/10 text-gold"
                       : "border-white/25 text-foreground hover:bg-white/10"
